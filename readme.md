@@ -1,7 +1,5 @@
-# playbuzz-watcher
-
-> My wondrous app
-
+# folder-watcher
+watches a folder and copies every new file to a target directory
 
 ## Dev
 
@@ -27,3 +25,4 @@ Builds the app for OS X, Linux, and Windows, using [electron-packager](https://g
 ## License
 
 MIT © [Dan Mordechay](http://unite.co.il)
+
