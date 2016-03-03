@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Electron boilerplate</title>
+		<link rel="stylesheet" href="index.css">
+	</head>
+	<body>
+		<div class="container">
+			<header>
+				<h1>Electron boilerplate</h1>
+			</header>
+			<section class="main">
+                <div>
+                    <label>Source folder: </label><input id="source" type="text" />
+                </div>
+                <div>
+                    <label>Target folder: </label><input id="target" type="text" />
+                </div> 
+                <button id="start-button">Start Listening</button>
+                <button id="stop-button">Stop Listening</button>
+                <div> 
+                    <label id="user-message"></label>
+                </div>
+            </section>
+			<footer></footer>
+		</div>
+		<script type="text/javascript" src="build/main.js"></script>
+	</body>
+</html>
