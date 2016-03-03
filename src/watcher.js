@@ -41,7 +41,7 @@ export class Watcher {
 
     _copy(source, target) {
         this._fs.createReadStream(source)
-            .pipe(this._fs.createWriteStream(target));
+                .pipe(this._fs.createWriteStream(target));
     }
 
     stopListening() {
