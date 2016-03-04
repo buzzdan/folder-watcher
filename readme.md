@@ -6,6 +6,11 @@ watches a folder and copies every new file to a target directory
 ```
 $ npm install
 ```
+## Test
+
+```
+$ npm run test
+```
 
 ### Run
 
