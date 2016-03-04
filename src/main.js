@@ -1,6 +1,6 @@
 var fs = require('fs');
 import { Watcher } from './watcher';
-import { formatter } from './fileNameFormatter';
+import formatter from './fileNameFormatter';
 
 var watcher = new Watcher(fs, formatter);
 
