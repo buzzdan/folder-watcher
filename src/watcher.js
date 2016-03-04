@@ -26,17 +26,9 @@ export class Watcher {
 
             console.log(`copying ${filename} file to target`);
 
-            let targetPath = targetDir + '/' + this._getCorrectFileName(filename);
+            let targetPath = targetDir + '/' + this._formatFileName(filename);
             this._copy(sourceDir + '/' + filename, targetPath);
         });
-    }
-
-    _getCorrectFileName(currentFileName) {
-        if (!currentFileName.endsWith('.txt')) {
-            var now = new Date().toLocaleTimeString().split(':',2);
-            return now[0].toString() + now[1].toString() + currentFileName;
-        }
-        return currentFileName;
     }
 
     _copy(source, target) {
