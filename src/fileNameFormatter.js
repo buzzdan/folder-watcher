@@ -1,7 +1,7 @@
 export default (filename) => {
     if (!filename.endsWith('.txt')) {
-        var now = new Date().toLocaleTimeString().split(':', 2);
-        return now[0].toString() + now[1].toString() + filename;
+        let now = new Date();
+        return now.getHours().toString() + now.getMinutes().toString() + filename;
     }
     return filename;
 }
