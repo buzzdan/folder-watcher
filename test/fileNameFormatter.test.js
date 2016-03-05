@@ -14,7 +14,7 @@ describe('formatFileName', function () {
     before(() => {
         this.clock = sinon.useFakeTimers(new Date("25 Dec, 1995 23:15:00").getTime());
     });
-    it('should return file name with 4 digits prefix for non-txt extention', (done) => {
+    it('should return file name with time prefix for non-txt extension', (done) => {
         var filename = formatter('something.pdf');
         expect(filename).toBe('2315something.pdf');
         done();
