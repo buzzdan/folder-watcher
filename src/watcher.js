@@ -6,8 +6,13 @@ export class Watcher {
         this._formatFileName = formatFileName;
         this._fs = fileSystem;
         this._watcher = null;
+        this.finishedAction = ()=>{};
     }
-
+    
+    onCopiedFinished(finishedAction){
+        this.finishedAction = finishedAction;
+    }
+    
     startListening(sourceDir, targetDir) {
         console.log(`listening to: ${sourceDir} \nInto: ${targetDir}`);
 
@@ -32,8 +37,11 @@ export class Watcher {
     }
 
     _copy(source, target) {
-        this._fs.createReadStream(source)
-                .pipe(this._fs.createWriteStream(target));
+        let reader = this._fs.createReadStream(source);
+        reader.on('end', ()=>{
+            this.finishedAction();
+        });
+        reader.pipe(this._fs.createWriteStream(target));
     }
 
     stopListening() {
