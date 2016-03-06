@@ -6,7 +6,7 @@ var sinon = require('sinon');
 
 
 describe('When Watcher is listening to source folder', () => {
-    let watcher = null;
+    let watcher = new Watcher(fs, formatter);
 
     before(() => {
     });
@@ -20,7 +20,6 @@ describe('When Watcher is listening to source folder', () => {
         resetFolder("from1");
         resetFolder("to1");
         
-        watcher = new Watcher(fs, formatter);
         watcher.startListening("from1", "to1");
         
         watcher.onCopiedFinished(() => {
@@ -43,7 +42,6 @@ describe('When Watcher is listening to source folder', () => {
         resetFolder("to2");
         resetFolder("tmp");
         
-        watcher = new Watcher(fs, formatter);
         watcher.startListening("from2", "to2");
        
         watcher.onCopiedFinished(() => {

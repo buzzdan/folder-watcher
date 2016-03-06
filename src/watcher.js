@@ -8,7 +8,7 @@ export class Watcher {
         this._formatFileName = formatFileName;
         this._fs = fileSystem;
         this._watcher = null;
-        this.finishedAction = ()=>{};
+        this.finishedAction = () => { };
     }
     
     onCopiedFinished(finishedAction){
@@ -17,10 +17,13 @@ export class Watcher {
     
     startListening(sourceDir, targetDir) {
         console.log(`${this._id}: listening to: ${sourceDir} Into: ${targetDir}`);
-
+        
+        if(this._watcher) 
+            throw new Error("Already listening, listener must be stopped first");
+        
         this._watcher = this._fs.watch(sourceDir, (event, filename) => {
             console.log(`${this._id}: ${event} event for ${filename}`);
-            console.log(this._fs.readdirSync(sourceDir));
+            
             if (!filename) {
                 console.log('filename not provided');
                 return;
@@ -53,8 +56,7 @@ export class Watcher {
         if (this._watcher) {
             console.log(`${this._id}: Closing watcher`);
             this._watcher.close();
+            this._watcher = null;
         }
     }
 }
-
-

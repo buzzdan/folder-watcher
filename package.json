@@ -44,6 +44,7 @@
     "expect": "^1.14.0",
     "mocha": "^2.4.5",
     "mocha-webpack": "^0.1.0",
+    "mock-fs": "^3.7.0",
     "node-sass": "^3.3.3",
     "nodemon": "^1.7.0",
     "sass-loader": "^2.0.1",
