@@ -1,8 +1,10 @@
-
+var id = 1;
 
 export class Watcher {
     constructor(fileSystem, formatFileName) {
-        console.log("initializing watcher...");
+        this._id = id ++;
+        console.log("initializing watcher..."+ this._id);
+        
         this._formatFileName = formatFileName;
         this._fs = fileSystem;
         this._watcher = null;
@@ -14,22 +16,22 @@ export class Watcher {
     }
     
     startListening(sourceDir, targetDir) {
-        console.log(`listening to: ${sourceDir} \nInto: ${targetDir}`);
+        console.log(`${this._id}: listening to: ${sourceDir} Into: ${targetDir}`);
 
         this._watcher = this._fs.watch(sourceDir, (event, filename) => {
-            console.log(`${event} for ${filename}`);
-
+            console.log(`${this._id}: ${event} event for ${filename}`);
+            console.log(this._fs.readdirSync(sourceDir));
             if (!filename) {
                 console.log('filename not provided');
                 return;
             }
 
             if (event !== 'rename') {
-                console.log(`cant handle ${event} event`);
+                console.log(`${this._id}: cant handle ${event} event`);
                 return;
             }
 
-            console.log(`copying ${filename} file to target`);
+            console.log(`${this._id}: copying ${filename} file to target`);
 
             let targetPath = targetDir + '/' + this._formatFileName(filename);
             this._copy(sourceDir + '/' + filename, targetPath);
@@ -37,16 +39,19 @@ export class Watcher {
     }
 
     _copy(source, target) {
-        let reader = this._fs.createReadStream(source);
-        reader.on('end', ()=>{
+        this._fs.rename(source,target, err=> {
+            if(err){
+                console.log(err);
+                return;
+            } 
+            console.log(`${this._id}: copied ${source} into ${target}`);
             this.finishedAction();
         });
-        reader.pipe(this._fs.createWriteStream(target));
     }
 
     stopListening() {
         if (this._watcher) {
-            console.log('Closing watcher');
+            console.log(`${this._id}: Closing watcher`);
             this._watcher.close();
         }
     }

@@ -9,57 +9,77 @@ describe('When Watcher is listening to source folder', () => {
     let watcher = null;
 
     before(() => {
-        mkdirSync("tmp");
-        mkdirSync("tmp2");
-        mkdirSync("tmp3");
     });
 
     beforeEach(() => {
-        watcher = new Watcher(fs, formatter);
-        watcher.startListening("tmp", "tmp2");
     });
 
     it('should copy the new file into target folder when creating a new file in source folder', (done) => {
         
-        //Assert
+        //Arrange
+        resetFolder("from1");
+        resetFolder("to1");
+        
+        watcher = new Watcher(fs, formatter);
+        watcher.startListening("from1", "to1");
+        
         watcher.onCopiedFinished(() => {
-            var content = fs.readFileSync("tmp2/dan.txt", "utf8");
+            console.log('1');
+            var content = fs.readFileSync("to1/dan.txt", "utf8");
+            
+            //Assert
             if (content === "Dan was here!")
                 done();
         });
         
         //Act
-        fs.writeFileSync("tmp/dan.txt", "Dan was here!", { encoding: 'utf8' });
+        fs.writeFileSync("from1/dan.txt", "Dan was here!", { encoding: 'utf8' });
     });
     
      it('should copy a file into target folder when the file is copied into the source folder', (done) => {
         
-        //Assert
+        //Arrange
+        resetFolder("from2");
+        resetFolder("to2");
+        resetFolder("tmp");
+        
+        watcher = new Watcher(fs, formatter);
+        watcher.startListening("from2", "to2");
+       
         watcher.onCopiedFinished(() => {
-            var content = fs.readFileSync("tmp2/copied.txt", "utf8");
+            console.log('2');
+            var content = fs.readFileSync("to2/copied.txt", "utf8");
+            
+            //Assert
             if (content === "Dan was here!")
                 done();
         });
         
         //Act
-        fs.writeFileSync("tmp3/copied.txt", "Dan was here!", { encoding: 'utf8' });
-        fs.createReadStream('tmp3/copied.txt').pipe(fs.createWriteStream('tmp/copied.txt'));
+        fs.writeFileSync("tmp/copied.txt", "Dan was here!", { encoding: 'utf8' });
+        fs.createReadStream('tmp/copied.txt').pipe(fs.createWriteStream('from2/copied.txt'));
     });
     
     afterEach(() => {
         watcher.stopListening();
+        
     });
 
     after(() => {
+        deleteFolder("from1");
+        deleteFolder("to1");
+        deleteFolder("from2");
+        deleteFolder("to2");
         deleteFolder("tmp");
-        deleteFolder("tmp2");
-        deleteFolder("tmp3");
     });
 });
 
 
 //Helpers:
-
+function resetFolder(path){
+    deleteFolder(path);
+    mkdirSync(path);
+}
 function mkdirSync(path) {
     try {
         fs.mkdirSync(path);
@@ -75,6 +95,7 @@ function deleteFolder(path) {
             if (fs.lstatSync(curPath).isDirectory()) { // recurse
                 deleteFolder(curPath);
             } else { // delete file
+                console.log('deleting file: '+ curPath);
                 fs.unlinkSync(curPath);
             }
         });
