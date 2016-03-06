@@ -1,26 +1,26 @@
 html,
 body {
-	padding: 0;
+	padding: 10px 5px 5px 10px;
 	margin: 0;
 }
 
 header {
-	position: absolute;
-	width: 500px;
-	height: 250px;
 	top: 50%;
-	left: 50%	;
-	margin-top: -125px;
-	margin-left: -250px;
+	left: 50%;
+    margin-bottom: 10px;
 	text-align: center;
 }
 
 header h1 {
 	font-family: 'Helvetica Neue', Helvetica, sans-serif;
-	font-size: 60px;
+	font-size: 40px;
 	font-weight: 100;
 	margin: 0;
 	padding: 0;
+}
+
+.main{
+    text-align: center;
 }
 
 .foo {
