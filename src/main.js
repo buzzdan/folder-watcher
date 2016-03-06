@@ -8,8 +8,8 @@ var userMessage = document.querySelector("#user-message");
 var source = document.querySelector("#source");
 var target = document.querySelector("#target");
 
-source.value = '/Users/danfromisrael/Development/dumper';
-target.value = '/Users/danfromisrael/Development/dumper2';
+// source.value = '/Users/danfromisrael/Development/dumper';
+// target.value = '/Users/danfromisrael/Development/dumper2';
 
 var startButton = document.querySelector("#start-button");
 var stopButton = document.querySelector("#stop-button");
